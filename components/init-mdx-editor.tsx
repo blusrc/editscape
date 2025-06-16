@@ -2,7 +2,7 @@
 
 import {
     BlockTypeSelect,
-    BoldItalicUnderlineToggles, CreateLink, diffSourcePlugin, DiffSourceToggleWrapper, headingsPlugin, InsertTable, linkDialogPlugin, linkPlugin, listsPlugin,
+    BoldItalicUnderlineToggles, CreateLink, diffSourcePlugin, DiffSourceToggleWrapper, headingsPlugin, imagePlugin, InsertImage, InsertTable, JsxComponentDescriptor, jsxPlugin, linkDialogPlugin, linkPlugin, listsPlugin,
     ListsToggle,
     markdownShortcutPlugin,
     MDXEditor, quotePlugin,
@@ -15,51 +15,51 @@ import {
 } from '@mdxeditor/editor'
 import type { ForwardedRef } from 'react'
 
-// const jsxComponentDescriptors: JsxComponentDescriptor[] = [
-//     {
-//         name: 'MyLeaf',
-//         kind: 'text', // 'text' for inline, 'flow' for block
-//         // the source field is used to construct the import statement at the top of the markdown document.
-//         // it won't be actually sourced.
-//         source: './external',
-//         // Used to construct the property popover of the generic editor
-//         props: [
-//             { name: 'foo', type: 'string' },
-//             { name: 'bar', type: 'string' },
-//             { name: 'onClick', type: 'expression' }
-//         ],
-//         // whether the component has children or not
-//         hasChildren: true,
-//         Editor: GenericJsxEditor
-//     },
-//     {
-//         name: 'Marker',
-//         kind: 'text',
-//         source: './external',
-//         props: [{ name: 'type', type: 'string' }],
-//         hasChildren: false,
-//         Editor: () => {
-//             return (
-//                 <div style={{ border: '1px solid red', padding: 8, margin: 8, display: 'inline-block' }}>
-//                     <NestedLexicalEditor<MdastJsx>
-//                         getContent={(node) => node.children}
-//                         getUpdatedMdastNode={(mdastNode, children: any) => {
-//                             return { ...mdastNode, children }
-//                         }}
-//                     />
-//                 </div>
-//             )
-//         }
-//     },
-//     {
-//         name: 'BlockNode',
-//         kind: 'flow',
-//         source: './external',
-//         props: [],
-//         hasChildren: true,
-//         Editor: GenericJsxEditor
-//     }
-// ]
+const jsxComponentDescriptors: JsxComponentDescriptor[] = [
+    //     {
+    //         name: 'MyLeaf',
+    //         kind: 'text', // 'text' for inline, 'flow' for block
+    //         // the source field is used to construct the import statement at the top of the markdown document.
+    //         // it won't be actually sourced.
+    //         source: './external',
+    //         // Used to construct the property popover of the generic editor
+    //         props: [
+    //             { name: 'foo', type: 'string' },
+    //             { name: 'bar', type: 'string' },
+    //             { name: 'onClick', type: 'expression' }
+    //         ],
+    //         // whether the component has children or not
+    //         hasChildren: true,
+    //         Editor: GenericJsxEditor
+    //     },
+    //     {
+    //         name: 'Marker',
+    //         kind: 'text',
+    //         source: './external',
+    //         props: [{ name: 'type', type: 'string' }],
+    //         hasChildren: false,
+    //         Editor: () => {
+    //             return (
+    //                 <div style={{ border: '1px solid red', padding: 8, margin: 8, display: 'inline-block' }}>
+    //                     <NestedLexicalEditor<MdastJsx>
+    //                         getContent={(node) => node.children}
+    //                         getUpdatedMdastNode={(mdastNode, children: any) => {
+    //                             return { ...mdastNode, children }
+    //                         }}
+    //                     />
+    //                 </div>
+    //             )
+    //         }
+    //     },
+    //     {
+    //         name: 'BlockNode',
+    //         kind: 'flow',
+    //         source: './external',
+    //         props: [],
+    //         hasChildren: true,
+    //         Editor: GenericJsxEditor
+    //     }
+]
 
 
 // // a toolbar button that will insert a JSX element into the editor.
@@ -99,6 +99,15 @@ export default function InitializedMDXEditor({
                 }),
 
                 tablePlugin(),
+                imagePlugin({
+                    // ImageDialog: () => {
+
+                    // },
+                    imageUploadHandler: () => {
+                        return Promise.resolve('https://picsum.photos/200/300')
+                    },
+                    imageAutocompleteSuggestions: ['https://picsum.photos/200/300', 'https://picsum.photos/200']
+                }),
 
                 linkPlugin(),
                 linkDialogPlugin(),
@@ -107,7 +116,7 @@ export default function InitializedMDXEditor({
                 thematicBreakPlugin(),
                 markdownShortcutPlugin(),
                 diffSourcePlugin(),
-                // jsxPlugin({ jsxComponentDescriptors }),
+                jsxPlugin({ jsxComponentDescriptors }),
                 toolbarPlugin({
                     toolbarContents: () => (
                         <DiffSourceToggleWrapper>
@@ -122,6 +131,7 @@ export default function InitializedMDXEditor({
                             <ListsToggle options={["bullet", "number"]} />
                             <Separator />
                             <InsertTable />
+                            <InsertImage />
                             {/* <InsertMyLeaf /> */}
                         </DiffSourceToggleWrapper>
                     )
