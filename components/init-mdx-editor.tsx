@@ -16,22 +16,22 @@ import {
 import type { ForwardedRef } from 'react'
 
 const jsxComponentDescriptors: JsxComponentDescriptor[] = [
-    //     {
-    //         name: 'MyLeaf',
-    //         kind: 'text', // 'text' for inline, 'flow' for block
-    //         // the source field is used to construct the import statement at the top of the markdown document.
-    //         // it won't be actually sourced.
-    //         source: './external',
-    //         // Used to construct the property popover of the generic editor
-    //         props: [
-    //             { name: 'foo', type: 'string' },
-    //             { name: 'bar', type: 'string' },
-    //             { name: 'onClick', type: 'expression' }
-    //         ],
-    //         // whether the component has children or not
-    //         hasChildren: true,
-    //         Editor: GenericJsxEditor
-    //     },
+    // {
+    //     name: 'MyLeaf',
+    //     kind: 'text', // 'text' for inline, 'flow' for block
+    //     // the source field is used to construct the import statement at the top of the markdown document.
+    //     // it won't be actually sourced.
+    //     source: './external',
+    //     // Used to construct the property popover of the generic editor
+    //     props: [
+    //         { name: 'foo', type: 'string' },
+    //         { name: 'bar', type: 'string' },
+    //         { name: 'onClick', type: 'expression' }
+    //     ],
+    //     // whether the component has children or not
+    //     hasChildren: true,
+    //     Editor: GenericJsxEditor
+    // },
     //     {
     //         name: 'Marker',
     //         kind: 'text',
@@ -139,7 +139,8 @@ export default function InitializedMDXEditor({
 
             ]}
             {...props}
-            // contentEditableClassName='prose'
+            className='light'
+            contentEditableClassName='editor-prose'
             ref={editorRef}
         />
     )

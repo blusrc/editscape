@@ -15,15 +15,16 @@ import { createElement, Suspense, useCallback, useEffect, useState } from 'react
 import * as runtime from 'react/jsx-runtime'
 import remarkGfm from 'remark-gfm'
 import richtypo from "richtypo"
-import { ellipses, numberUnits, orphans, quotes } from 'richtypo/rules/en'
+import { ellipses, numberUnits, quotes } from 'richtypo/rules/en'
+import { ModeToggle } from './ui/mode-toggle'
 
 
 const defaultTab = "both"
 
 const customRules = [
     (text: string) => text.replace(/—/g, '-'),
-    (text: string) => text.replace(/&/g, 'and'),
-    ...[ellipses, numberUnits, orphans, quotes]
+    (text: string) => text.replace(/ & /g, 'and'),
+    ...[ellipses, numberUnits, quotes]
 ];
 
 
@@ -32,10 +33,87 @@ export default function WYSIWYG() {
     const isDesktop = useMediaQuery("(min-width: 768px)");
 
     const [markdown, setMarkdown] = useState(`
-    # Hello World
-    
-    This is **bold** text and this is *italic*.
-  
+    # The Ultimate Guide to Markdown Syntax
+
+Markdown is a lightweight markup language that you can use to format text. It's especially popular among developers, writers, and content creators due to its simplicity and readability.
+
+## Getting Started with Markdown
+
+To write Markdown, you just need a basic text editor. For more advanced usage, editors like [Typora](https://typora.io/) or online platforms like [Dillinger](https://dillinger.io/) provide a user-friendly interface.
+
+### Why Use Markdown?
+
+- It\’s **lightweight** and easy to learn
+- It\’s platform-independent
+- Compatible with version control systems like Git
+- Converts easily to HTML
+
+> Markdown is not a replacement for HTML, but a syntax for writing for the web. \– John Gruber
+
+## Basic Syntax
+
+### Headings
+
+Use \`#\` for headings:
+
+- \`#\` for H1
+- \`##\` for H2
+- \`###\` for H3
+
+### Emphasis
+
+- *Italic* text using \`*asterisks*\`
+- **Bold** text using \`**double asterisks**\`
+- ***Bold and italic*** using \`***triple asterisks***\`
+
+### Lists
+
+Unordered List
+
+- Apples
+- Oranges
+- Valencia
+- Navel
+- Bananas
+
+Ordered List
+
+1. First item
+2. Second item
+1. Sub-item
+3. Third item
+
+### Code
+
+<p class="breakout">Use inline code like this: \`console.log('Hello, Markdown!')\` aoensth ansotehunsaoht es unaohsenuhaosn euhsaonethu nsaothe unstaoh eaonsheu nsaonseuhsaoneuh</p>
+<p class="bleed">Use inline code like this: \`console.log('Hello, Markdown!')\` aoensth ansotehunsaoht es unaohsenuhaosn euhsaonethu nsaothe unstaoh eaonsheu nsaonseuhsaoneuh</p>
+
+
+### Highlight (Custom HTML or extended Markdown)
+
+You can use ==highlight== for emphasis with extended Markdown processors.
+
+### Blockquote
+
+> Markdown makes quoting content simple and readable.
+
+## Tables
+
+| Syntax      | Description     | Example                   |
+|-------------|-----------------|---------------------------|
+| \`**bold**\`  | Bold text       | **Bold**                  |
+| \`*italic*\`  | Italic text     | *Italic*                  |
+| \`[link]() \` | Hyperlink       | [OpenAI](https://openai.com) |
+
+## Final Thoughts
+
+Markdown is an invaluable tool for anyone who writes for the web. It allows for quick formatting without the complexity of HTML or rich text editors.
+
+Want to practice? Try this [interactive Markdown tutorial](https://www.markdowntutorial.com/).
+
+---
+
+Happy writing in *Markdown*!
     `);
 
     const sanitizeMd = (markdown: string) => {
@@ -116,6 +194,7 @@ export default function WYSIWYG() {
                     </ToggleGroup>
                 </div>
 
+                <ModeToggle />
                 <Button>Save</Button>
             </header>
             <section className='flex flex-1 flex-col'>
@@ -125,7 +204,6 @@ export default function WYSIWYG() {
                             <Suspense fallback={null}>
                                 <Editor
                                     markdown={markdown}
-                                    contentEditableClassName='prose'
                                     className='flex-1'
                                     onChange={sanitizeMd}
                                 />
@@ -142,7 +220,6 @@ export default function WYSIWYG() {
                                             markdown={markdown}
                                             className='flex-1'
                                             onChange={sanitizeMd}
-                                            contentEditableClassName='prose'
                                         />
                                     </Suspense>
                                 </ResizablePanel>
@@ -153,7 +230,7 @@ export default function WYSIWYG() {
                                 <ResizablePanel defaultSize={50} className='flex flex-col'>
                                     <MDXProvider>
                                         {mdxContent &&
-                                            <article className='prose'>
+                                            <article className='prose h-full'>
                                                 {
                                                     createElement(mdxContent)
                                                 }
@@ -166,7 +243,7 @@ export default function WYSIWYG() {
 
                             <MDXProvider>
                                 {mdxContent &&
-                                    <article className='prose'>
+                                    <article className='prose h-full'>
                                         {
                                             createElement(mdxContent)
                                         }
